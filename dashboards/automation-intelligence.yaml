@@ -1,0 +1,545 @@
+name: "Automation Intelligence Center"
+type: dashboard
+id: b4d9c685-2a32-4f58-bc9a-9074fde437a8
+content:
+  annotations: []
+  importedWithCode: false
+  settings:
+    defaultTimeframe:
+      enabled: true
+      value:
+        from: now()-2h
+        to: now()
+  layouts:
+    "1":
+      x: 0
+      "y": 0
+      w: 24
+      h: 2
+    "2":
+      x: 0
+      "y": 2
+      w: 5
+      h: 3
+    "3":
+      x: 5
+      "y": 2
+      w: 5
+      h: 3
+    "4":
+      x: 10
+      "y": 2
+      w: 5
+      h: 3
+    "5":
+      x: 15
+      "y": 2
+      w: 5
+      h: 3
+    "6":
+      x: 20
+      "y": 2
+      w: 4
+      h: 3
+    "7":
+      x: 0
+      "y": 5
+      w: 24
+      h: 1
+    "8":
+      x: 0
+      "y": 6
+      w: 6
+      h: 7
+    "9":
+      x: 6
+      "y": 6
+      w: 18
+      h: 7
+    "10":
+      x: 0
+      "y": 13
+      w: 24
+      h: 1
+    "11":
+      x: 0
+      "y": 14
+      w: 15
+      h: 7
+    "12":
+      x: 15
+      "y": 14
+      w: 9
+      h: 7
+    "13":
+      x: 0
+      "y": 21
+      w: 24
+      h: 1
+    "14":
+      x: 0
+      "y": 22
+      w: 12
+      h: 7
+    "15":
+      x: 12
+      "y": 22
+      w: 12
+      h: 7
+    "16":
+      x: 0
+      "y": 29
+      w: 24
+      h: 1
+    "17":
+      x: 0
+      "y": 30
+      w: 9
+      h: 7
+    "18":
+      x: 9
+      "y": 30
+      w: 15
+      h: 7
+    "19":
+      x: 0
+      "y": 37
+      w: 24
+      h: 1
+    "20":
+      x: 0
+      "y": 38
+      w: 14
+      h: 7
+    "21":
+      x: 14
+      "y": 38
+      w: 10
+      h: 7
+    "22":
+      x: 0
+      "y": 45
+      w: 24
+      h: 1
+    "23":
+      x: 0
+      "y": 46
+      w: 12
+      h: 7
+    "24":
+      x: 12
+      "y": 46
+      w: 12
+      h: 7
+  tiles:
+    "1":
+      title: ""
+      type: markdown
+      content: |
+        ## 🤖 Automation Intelligence Center
+        **Problem → Workflow correlation · Remediation health · Root cause recurrence · MTTR analysis**
+        *Detect where automation is masking root causes instead of resolving them*
+
+    "2":
+      title: "Active Problems"
+      type: data
+      query: |
+        fetch dt.davis.problems
+        | filter not(dt.davis.is_duplicate) and event.status == "ACTIVE"
+        | summarize active_problems = count()
+      visualization: singleValue
+      visualizationSettings:
+        autoSelectVisualization: false
+        singleValue:
+          showLabel: true
+          label: "Active Problems"
+          recordField: active_problems
+      coloring:
+        colorRules:
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: active_problems, value: -1 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#eea53c" }, field: active_problems, value: 10 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#c62239" }, field: active_problems, value: 20 }
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+
+    "3":
+      title: "Availability Issues"
+      type: data
+      query: |
+        fetch dt.davis.problems
+        | filter not(dt.davis.is_duplicate) and event.status == "ACTIVE"
+          and event.category == "AVAILABILITY"
+        | summarize count = count()
+      visualization: singleValue
+      visualizationSettings:
+        autoSelectVisualization: false
+        singleValue:
+          showLabel: true
+          label: "Availability"
+          recordField: count
+      coloring:
+        colorRules:
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: count, value: -1 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#eea53c" }, field: count, value: 2 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#c62239" }, field: count, value: 5 }
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+
+    "4":
+      title: "Error Rate Problems"
+      type: data
+      query: |
+        fetch dt.davis.problems
+        | filter not(dt.davis.is_duplicate) and event.status == "ACTIVE"
+          and event.category == "ERROR"
+        | summarize count = count()
+      visualization: singleValue
+      visualizationSettings:
+        autoSelectVisualization: false
+        singleValue:
+          showLabel: true
+          label: "Errors"
+          recordField: count
+      coloring:
+        colorRules:
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: count, value: -1 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#eea53c" }, field: count, value: 2 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#c62239" }, field: count, value: 5 }
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+
+    "5":
+      title: "Resource Contention"
+      type: data
+      query: |
+        fetch dt.davis.problems
+        | filter not(dt.davis.is_duplicate) and event.status == "ACTIVE"
+          and event.category == "RESOURCE_CONTENTION"
+        | summarize count = count()
+      visualization: singleValue
+      visualizationSettings:
+        autoSelectVisualization: false
+        singleValue:
+          showLabel: true
+          label: "Resource"
+          recordField: count
+      coloring:
+        colorRules:
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: count, value: -1 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#eea53c" }, field: count, value: 2 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#c62239" }, field: count, value: 5 }
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+
+    "6":
+      title: "Resolved (Closed)"
+      type: data
+      query: |
+        fetch dt.davis.problems
+        | filter not(dt.davis.is_duplicate) and event.status == "CLOSED"
+        | summarize resolved = count()
+      visualization: singleValue
+      visualizationSettings:
+        autoSelectVisualization: false
+        singleValue:
+          showLabel: true
+          label: "Resolved"
+          recordField: resolved
+      coloring:
+        colorRules:
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: resolved, value: -1 }
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+
+    "7":
+      title: ""
+      type: markdown
+      content: "### 🌐 Problem Landscape"
+
+    "8":
+      title: "Active Problems by Category"
+      type: data
+      query: |
+        fetch dt.davis.problems
+        | filter not(dt.davis.is_duplicate) and event.status == "ACTIVE"
+        | summarize count(), by: {event.category}
+        | sort `count()` desc
+      visualization: pieChart
+      visualizationSettings:
+        autoSelectVisualization: false
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+
+    "9":
+      title: "Problem Activity Over Time — Active vs Closed by Category"
+      type: data
+      query: |
+        fetch dt.davis.problems
+        | filter not(dt.davis.is_duplicate)
+        | makeTimeseries active = countIf(event.status == "ACTIVE"),
+            closed = countIf(event.status == "CLOSED"),
+            interval: 30m,
+            by: {event.category}
+      visualization: areaChart
+      visualizationSettings:
+        autoSelectVisualization: false
+        chartSettings:
+          legend:
+            position: bottom
+            showLegend: true
+          stacked: false
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+
+    "10":
+      title: ""
+      type: markdown
+      content: "### 📋 Problem Details & Entity Impact"
+
+    "11":
+      title: "Recent Problems — Status, Root Cause & Blast Radius"
+      type: data
+      query: |
+        fetch dt.davis.problems
+        | filter not(dt.davis.is_duplicate)
+        | fields display_id, event.name, event.category, event.status,
+            event.start, root_cause_entity_name,
+            affected_count = arraySize(smartscape.affected_entity.ids)
+        | sort event.start desc
+        | limit 25
+      visualization: table
+      visualizationSettings:
+        autoSelectVisualization: false
+        table:
+          linewrapEnabled: true
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+
+    "12":
+      title: "Active Problems by Affected Entity Type"
+      type: data
+      query: |
+        fetch dt.davis.problems
+        | filter not(dt.davis.is_duplicate) and event.status == "ACTIVE"
+        | filter isNotNull(smartscape.affected_entity.types)
+        | fieldsAdd entity_type = arrayToString(smartscape.affected_entity.types, delimiter: ",")
+        | summarize total = count(),
+            avg_blast_radius = avg(arraySize(smartscape.affected_entity.ids)),
+            by: {entity_type}
+        | sort total desc
+        | limit 10
+      visualization: table
+      visualizationSettings:
+        autoSelectVisualization: false
+        table:
+          linewrapEnabled: false
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+
+    "13":
+      title: ""
+      type: markdown
+      content: "### 🔬 Root Cause Intelligence"
+
+    "14":
+      title: "Known Root Causes — Recurrence & Active Status"
+      type: data
+      query: |
+        fetch dt.davis.problems
+        | filter not(dt.davis.is_duplicate)
+        | filter isNotNull(root_cause_entity_name)
+        | summarize total_problems = count(),
+            active_now = countIf(event.status == "ACTIVE"),
+            last_seen = max(event.start),
+            by: {root_cause_entity_name}
+        | sort total_problems desc
+        | limit 15
+      visualization: table
+      visualizationSettings:
+        autoSelectVisualization: false
+        table:
+          linewrapEnabled: false
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+
+    "15":
+      title: "Avg Time to Resolve by Category (minutes)"
+      type: data
+      query: |
+        fetch dt.davis.problems
+        | filter not(dt.davis.is_duplicate)
+        | fieldsAdd duration_min = (coalesce(event.end, now()) - event.start)
+            / 1000000000 / 60
+        | summarize mttr_min = avg(duration_min), by: {event.category}
+        | sort mttr_min desc
+      visualization: table
+      visualizationSettings:
+        autoSelectVisualization: false
+        table:
+          linewrapEnabled: false
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+
+    "16":
+      title: ""
+      type: markdown
+      content: "### 🤖 Automation & Workflow Activity"
+
+    "17":
+      title: "Workflow Executions — Pass / Fail"
+      type: data
+      query: |
+        fetch bizevents
+        | filter event.provider == "workflows"
+        | summarize executions = count(),
+            passed = countIf(test.result == "pass"),
+            failed = countIf(test.result == "fail"),
+            by: {event.type}
+        | sort executions desc
+      visualization: table
+      visualizationSettings:
+        autoSelectVisualization: false
+        table:
+          linewrapEnabled: false
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+
+    "18":
+      title: "Anomaly Signal Volume Over Time — Kubernetes & Metric Events"
+      type: data
+      query: |
+        fetch events
+        | filter event.provider == "METRIC_EVENTS"
+            or event.provider == "KUBERNETES_ANOMALY_DETECTION"
+        | makeTimeseries count = count(), interval: 30m, by: {event.type}
+      visualization: lineChart
+      visualizationSettings:
+        autoSelectVisualization: false
+        chartSettings:
+          legend:
+            position: bottom
+            showLegend: true
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+
+    "19":
+      title: ""
+      type: markdown
+      content: "### ♻️ Recurring Problem Detection — Automation Masking Root Causes?"
+
+    "20":
+      title: "Problems Recurring by Name — Potential Unresolved Root Causes"
+      type: data
+      query: |
+        fetch dt.davis.problems
+        | filter not(dt.davis.is_duplicate)
+        | summarize occurrences = count(),
+            active_now = countIf(event.status == "ACTIVE"),
+            first_seen = min(event.start),
+            last_seen = max(event.start),
+            by: {event.name}
+        | filter occurrences > 1
+        | sort occurrences desc
+        | limit 20
+      visualization: table
+      visualizationSettings:
+        autoSelectVisualization: false
+        table:
+          linewrapEnabled: true
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+
+    "21":
+      title: "Problem Resolution Rate Over Time"
+      type: data
+      query: |
+        fetch dt.davis.problems
+        | filter not(dt.davis.is_duplicate)
+        | makeTimeseries active = countIf(event.status == "ACTIVE"),
+            resolved = countIf(event.status == "CLOSED"),
+            interval: 30m
+      visualization: areaChart
+      visualizationSettings:
+        autoSelectVisualization: false
+        chartSettings:
+          legend:
+            position: bottom
+            showLegend: true
+          stacked: false
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+
+    "22":
+      title: ""
+      type: markdown
+      content: "### 🚀 CI/CD & Deployment Context"
+
+    "23":
+      title: "CI/CD Events — GitHub & Azure DevOps"
+      type: data
+      query: |
+        fetch events
+        | filter event.provider == "github.com" or event.provider == "azure.devops"
+        | summarize deployments = count(), by: {event.provider, event.type}
+        | sort deployments desc
+        | limit 15
+      visualization: table
+      visualizationSettings:
+        autoSelectVisualization: false
+        table:
+          linewrapEnabled: false
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
+
+    "24":
+      title: "Slowdown & Performance Degradation Problems"
+      type: data
+      query: |
+        fetch dt.davis.problems
+        | filter not(dt.davis.is_duplicate) and event.category == "SLOWDOWN"
+        | fields display_id, event.name, event.status, event.start,
+            root_cause_entity_name,
+            affected_count = arraySize(smartscape.affected_entity.ids)
+        | sort event.start desc
+        | limit 15
+      visualization: table
+      visualizationSettings:
+        autoSelectVisualization: false
+        table:
+          linewrapEnabled: false
+      davis:
+        enabled: false
+        davisVisualization:
+          isAvailable: true
