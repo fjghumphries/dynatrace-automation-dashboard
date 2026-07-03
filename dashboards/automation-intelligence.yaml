@@ -11,135 +11,65 @@ content:
         from: now()-2h
         to: now()
   layouts:
-    "1":
-      x: 0
-      "y": 0
-      w: 24
-      h: 2
-    "2":
-      x: 0
-      "y": 2
-      w: 5
-      h: 3
-    "3":
-      x: 5
-      "y": 2
-      w: 5
-      h: 3
-    "4":
-      x: 10
-      "y": 2
-      w: 5
-      h: 3
-    "5":
-      x: 15
-      "y": 2
-      w: 5
-      h: 3
-    "6":
-      x: 20
-      "y": 2
-      w: 4
-      h: 3
-    "7":
-      x: 0
-      "y": 5
-      w: 24
-      h: 1
-    "8":
-      x: 0
-      "y": 6
-      w: 6
-      h: 7
-    "9":
-      x: 6
-      "y": 6
-      w: 18
-      h: 7
-    "10":
-      x: 0
-      "y": 13
-      w: 24
-      h: 1
-    "11":
-      x: 0
-      "y": 14
-      w: 15
-      h: 7
-    "12":
-      x: 15
-      "y": 14
-      w: 9
-      h: 7
-    "13":
-      x: 0
-      "y": 21
-      w: 24
-      h: 1
-    "14":
-      x: 0
-      "y": 22
-      w: 12
-      h: 7
-    "15":
-      x: 12
-      "y": 22
-      w: 12
-      h: 7
-    "16":
-      x: 0
-      "y": 29
-      w: 24
-      h: 1
-    "17":
-      x: 0
-      "y": 30
-      w: 9
-      h: 7
-    "18":
-      x: 9
-      "y": 30
-      w: 15
-      h: 7
-    "19":
-      x: 0
-      "y": 37
-      w: 24
-      h: 1
-    "20":
-      x: 0
-      "y": 38
-      w: 14
-      h: 7
-    "21":
-      x: 14
-      "y": 38
-      w: 10
-      h: 7
-    "22":
-      x: 0
-      "y": 45
-      w: 24
-      h: 1
-    "23":
-      x: 0
-      "y": 46
-      w: 12
-      h: 7
-    "24":
-      x: 12
-      "y": 46
-      w: 12
-      h: 7
+    # ── Main Header ──────────────────────────────────────────
+    "1":  { x: 0,  "y": 0,  w: 24, h: 3 }
+    # ── KPI Row 1: Problem Health ─────────────────────────────
+    "2":  { x: 0,  "y": 3,  w: 5,  h: 3 }
+    "3":  { x: 5,  "y": 3,  w: 5,  h: 3 }
+    "4":  { x: 10, "y": 3,  w: 5,  h: 3 }
+    "5":  { x: 15, "y": 3,  w: 5,  h: 3 }
+    "6":  { x: 20, "y": 3,  w: 4,  h: 3 }
+    # ── KPI Row 2: Automation Health ──────────────────────────
+    "25": { x: 0,  "y": 6,  w: 6,  h: 3 }
+    "26": { x: 6,  "y": 6,  w: 6,  h: 3 }
+    "27": { x: 12, "y": 6,  w: 6,  h: 3 }
+    "28": { x: 18, "y": 6,  w: 6,  h: 3 }
+    # ── Section: Problem Landscape ────────────────────────────
+    "7":  { x: 0,  "y": 9,  w: 24, h: 2 }
+    "8":  { x: 0,  "y": 11, w: 6,  h: 7 }
+    "9":  { x: 6,  "y": 11, w: 18, h: 7 }
+    # ── Section: Problem Details ──────────────────────────────
+    "10": { x: 0,  "y": 18, w: 24, h: 2 }
+    "11": { x: 0,  "y": 20, w: 15, h: 7 }
+    "12": { x: 15, "y": 20, w: 9,  h: 7 }
+    # ── Section: Root Cause Intelligence ──────────────────────
+    "13": { x: 0,  "y": 27, w: 24, h: 2 }
+    "14": { x: 0,  "y": 29, w: 12, h: 7 }
+    "15": { x: 12, "y": 29, w: 12, h: 7 }
+    # ── Section: Automation & Workflow Activity ────────────────
+    "16": { x: 0,  "y": 36, w: 24, h: 2 }
+    "17": { x: 0,  "y": 38, w: 9,  h: 7 }
+    "18": { x: 9,  "y": 38, w: 15, h: 7 }
+    # ── Section: Automation Effectiveness ─────────────────────
+    "29": { x: 0,  "y": 45, w: 24, h: 2 }
+    "30": { x: 0,  "y": 47, w: 13, h: 7 }
+    "31": { x: 13, "y": 47, w: 11, h: 7 }
+    # ── Section: Recurring Problem Detection ──────────────────
+    "19": { x: 0,  "y": 54, w: 24, h: 2 }
+    "20": { x: 0,  "y": 56, w: 14, h: 7 }
+    "21": { x: 14, "y": 56, w: 10, h: 7 }
+    # ── Section: CI/CD & Deployment Context ───────────────────
+    "22": { x: 0,  "y": 63, w: 24, h: 2 }
+    "23": { x: 0,  "y": 65, w: 12, h: 7 }
+    "24": { x: 12, "y": 65, w: 12, h: 7 }
+
   tiles:
+
+    # ════════════════════════════════════════════════════════════
+    # MAIN HEADER
+    # ════════════════════════════════════════════════════════════
     "1":
       title: ""
       type: markdown
       content: |
         ## 🤖 Automation Intelligence Center
-        **Problem → Workflow correlation · Remediation health · Root cause recurrence · MTTR analysis**
-        *Detect where automation is masking root causes instead of resolving them*
+        Visualize the full lifecycle of problems and their automated responses — from detection through remediation. Use this dashboard to understand **where automation is working**, where it is **masking unresolved root causes**, and which issues are **cycling indefinitely** without a permanent fix.
 
+        > **Key questions to answer:** Are problems being auto-resolved or just temporarily suppressed? Which issues keep recurring? Is automation coverage growing fast enough to match the problem rate?
+
+    # ════════════════════════════════════════════════════════════
+    # KPI ROW 1 — PROBLEM HEALTH
+    # ════════════════════════════════════════════════════════════
     "2":
       title: "Active Problems"
       type: data
@@ -159,10 +89,7 @@ content:
           - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: active_problems, value: -1 }
           - { colorMode: custom-color, comparator: ">", customColor: { Default: "#eea53c" }, field: active_problems, value: 10 }
           - { colorMode: custom-color, comparator: ">", customColor: { Default: "#c62239" }, field: active_problems, value: 20 }
-      davis:
-        enabled: false
-        davisVisualization:
-          isAvailable: true
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
     "3":
       title: "Availability Issues"
@@ -184,10 +111,7 @@ content:
           - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: count, value: -1 }
           - { colorMode: custom-color, comparator: ">", customColor: { Default: "#eea53c" }, field: count, value: 2 }
           - { colorMode: custom-color, comparator: ">", customColor: { Default: "#c62239" }, field: count, value: 5 }
-      davis:
-        enabled: false
-        davisVisualization:
-          isAvailable: true
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
     "4":
       title: "Error Rate Problems"
@@ -209,10 +133,7 @@ content:
           - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: count, value: -1 }
           - { colorMode: custom-color, comparator: ">", customColor: { Default: "#eea53c" }, field: count, value: 2 }
           - { colorMode: custom-color, comparator: ">", customColor: { Default: "#c62239" }, field: count, value: 5 }
-      davis:
-        enabled: false
-        davisVisualization:
-          isAvailable: true
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
     "5":
       title: "Resource Contention"
@@ -234,10 +155,7 @@ content:
           - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: count, value: -1 }
           - { colorMode: custom-color, comparator: ">", customColor: { Default: "#eea53c" }, field: count, value: 2 }
           - { colorMode: custom-color, comparator: ">", customColor: { Default: "#c62239" }, field: count, value: 5 }
-      davis:
-        enabled: false
-        davisVisualization:
-          isAvailable: true
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
     "6":
       title: "Resolved (Closed)"
@@ -256,15 +174,108 @@ content:
       coloring:
         colorRules:
           - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: resolved, value: -1 }
-      davis:
-        enabled: false
-        davisVisualization:
-          isAvailable: true
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
+    # ════════════════════════════════════════════════════════════
+    # KPI ROW 2 — AUTOMATION HEALTH
+    # ════════════════════════════════════════════════════════════
+    "25":
+      title: "% Auto-Resolved (< 15 min)"
+      type: data
+      query: |
+        fetch dt.davis.problems
+        | filter not(dt.davis.is_duplicate) and event.status == "CLOSED"
+          and isNotNull(resolved_problem_duration)
+        | fieldsAdd duration_min = resolved_problem_duration / 1min
+        | summarize total_closed = count(), fast_resolved = countIf(duration_min < 15)
+        | fieldsAdd pct_auto_resolved = fast_resolved * 100 / total_closed
+      visualization: singleValue
+      visualizationSettings:
+        autoSelectVisualization: false
+        singleValue:
+          showLabel: true
+          label: "% Auto-Resolved"
+          recordField: pct_auto_resolved
+      coloring:
+        colorRules:
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#c62239" }, field: pct_auto_resolved, value: -1 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#eea53c" }, field: pct_auto_resolved, value: 40 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: pct_auto_resolved, value: 70 }
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
+
+    "26":
+      title: "Automation Pass Rate %"
+      type: data
+      query: |
+        fetch bizevents
+        | filter event.provider == "workflows"
+          and event.type == "demoability.test.problem-pattern"
+        | summarize total = count(), pass = countIf(pattern.status == "pass")
+        | fieldsAdd pct_pass = pass * 100 / total
+      visualization: singleValue
+      visualizationSettings:
+        autoSelectVisualization: false
+        singleValue:
+          showLabel: true
+          label: "Pattern Pass Rate"
+          recordField: pct_pass
+      coloring:
+        colorRules:
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#c62239" }, field: pct_pass, value: -1 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#eea53c" }, field: pct_pass, value: 60 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: pct_pass, value: 80 }
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
+
+    "27":
+      title: "Workflow Executions"
+      type: data
+      query: |
+        fetch bizevents
+        | filter event.provider == "workflows"
+        | summarize executions = count()
+      visualization: singleValue
+      visualizationSettings:
+        autoSelectVisualization: false
+        singleValue:
+          showLabel: true
+          label: "Executions"
+          recordField: executions
+      coloring:
+        colorRules:
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: executions, value: -1 }
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
+
+    "28":
+      title: "Frequent / Recurring Issues"
+      type: data
+      query: |
+        fetch dt.davis.problems
+        | filter not(dt.davis.is_duplicate) and event.status == "ACTIVE"
+          and dt.davis.is_frequent_event == true
+        | summarize frequent_count = count()
+      visualization: singleValue
+      visualizationSettings:
+        autoSelectVisualization: false
+        singleValue:
+          showLabel: true
+          label: "Frequent Issues"
+          recordField: frequent_count
+      coloring:
+        colorRules:
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: frequent_count, value: -1 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#eea53c" }, field: frequent_count, value: 0 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#c62239" }, field: frequent_count, value: 5 }
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
+
+    # ════════════════════════════════════════════════════════════
+    # SECTION: PROBLEM LANDSCAPE
+    # ════════════════════════════════════════════════════════════
     "7":
       title: ""
       type: markdown
-      content: "### 🌐 Problem Landscape"
+      content: |
+        ### 🌐 Problem Landscape
+        The current distribution and trend of all detected problems. **A growing active count with flat automation executions signals a coverage gap** — new problem types are appearing that no workflow is configured to handle. Spikes in AVAILABILITY are highest priority as they indicate user-facing outages.
 
     "8":
       title: "Active Problems by Category"
@@ -277,10 +288,7 @@ content:
       visualization: pieChart
       visualizationSettings:
         autoSelectVisualization: false
-      davis:
-        enabled: false
-        davisVisualization:
-          isAvailable: true
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
     "9":
       title: "Problem Activity Over Time — Active vs Closed by Category"
@@ -288,7 +296,8 @@ content:
       query: |
         fetch dt.davis.problems
         | filter not(dt.davis.is_duplicate)
-        | makeTimeseries active = countIf(event.status == "ACTIVE"),
+        | makeTimeseries
+            active = countIf(event.status == "ACTIVE"),
             closed = countIf(event.status == "CLOSED"),
             interval: 30m,
             by: {event.category}
@@ -300,15 +309,17 @@ content:
             position: bottom
             showLegend: true
           stacked: false
-      davis:
-        enabled: false
-        davisVisualization:
-          isAvailable: true
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
+    # ════════════════════════════════════════════════════════════
+    # SECTION: PROBLEM DETAILS & ENTITY IMPACT
+    # ════════════════════════════════════════════════════════════
     "10":
       title: ""
       type: markdown
-      content: "### 📋 Problem Details & Entity Impact"
+      content: |
+        ### 📋 Problem Details & Entity Impact
+        Individual problem records with root cause attribution and blast radius. **High `affected_count` values signal cascading failures** — a single root cause spreading across services or nodes. Empty `root_cause_entity_name` means Davis has not yet pinpointed the origin, making targeted automation harder to configure.
 
     "11":
       title: "Recent Problems — Status, Root Cause & Blast Radius"
@@ -326,10 +337,7 @@ content:
         autoSelectVisualization: false
         table:
           linewrapEnabled: true
-      davis:
-        enabled: false
-        davisVisualization:
-          isAvailable: true
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
     "12":
       title: "Active Problems by Affected Entity Type"
@@ -338,7 +346,8 @@ content:
         fetch dt.davis.problems
         | filter not(dt.davis.is_duplicate) and event.status == "ACTIVE"
         | filter isNotNull(smartscape.affected_entity.types)
-        | fieldsAdd entity_type = arrayToString(smartscape.affected_entity.types, delimiter: ",")
+        | fieldsAdd entity_type = arrayToString(smartscape.affected_entity.types,
+            delimiter: ",")
         | summarize total = count(),
             avg_blast_radius = avg(arraySize(smartscape.affected_entity.ids)),
             by: {entity_type}
@@ -349,15 +358,17 @@ content:
         autoSelectVisualization: false
         table:
           linewrapEnabled: false
-      davis:
-        enabled: false
-        davisVisualization:
-          isAvailable: true
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
+    # ════════════════════════════════════════════════════════════
+    # SECTION: ROOT CAUSE INTELLIGENCE
+    # ════════════════════════════════════════════════════════════
     "13":
       title: ""
       type: markdown
-      content: "### 🔬 Root Cause Intelligence"
+      content: |
+        ### 🔬 Root Cause Intelligence
+        **The critical automation quality signal.** Root causes with `active_now > 0` and `total_problems > 1` are the highest-risk entries: automation is repeatedly closing the symptom without fixing the underlying issue — accumulating operational debt with every auto-close cycle. MTTR by category reveals which problem types are hardest to resolve and where automation investment has the highest ROI.
 
     "14":
       title: "Known Root Causes — Recurrence & Active Status"
@@ -377,38 +388,40 @@ content:
         autoSelectVisualization: false
         table:
           linewrapEnabled: false
-      davis:
-        enabled: false
-        davisVisualization:
-          isAvailable: true
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
     "15":
       title: "Avg Time to Resolve by Category (minutes)"
       type: data
       query: |
         fetch dt.davis.problems
-        | filter not(dt.davis.is_duplicate)
-        | fieldsAdd duration_min = (coalesce(event.end, now()) - event.start)
-            / 1000000000 / 60
-        | summarize mttr_min = avg(duration_min), by: {event.category}
-        | sort mttr_min desc
+        | filter not(dt.davis.is_duplicate) and isNotNull(resolved_problem_duration)
+        | fieldsAdd duration_min = resolved_problem_duration / 1min
+        | summarize
+            avg_mttr = avg(duration_min),
+            p95_mttr = percentile(duration_min, 95),
+            problem_count = count(),
+            by: {event.category}
+        | sort avg_mttr desc
       visualization: table
       visualizationSettings:
         autoSelectVisualization: false
         table:
           linewrapEnabled: false
-      davis:
-        enabled: false
-        davisVisualization:
-          isAvailable: true
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
+    # ════════════════════════════════════════════════════════════
+    # SECTION: AUTOMATION & WORKFLOW ACTIVITY
+    # ════════════════════════════════════════════════════════════
     "16":
       title: ""
       type: markdown
-      content: "### 🤖 Automation & Workflow Activity"
+      content: |
+        ### 🤖 Automation & Workflow Activity
+        Volume and frequency of automated responses to anomaly signals. **Workflow execution spikes should correlate with anomaly volume spikes** — a flat automation line during a problem surge means workflows are not triggering, likely due to misconfigured alert rules or missing trigger conditions. The pattern execution table shows which use cases are actively being automated.
 
     "17":
-      title: "Workflow Executions — Pass / Fail"
+      title: "Workflow Executions — Pass / Fail by Type"
       type: data
       query: |
         fetch bizevents
@@ -423,10 +436,7 @@ content:
         autoSelectVisualization: false
         table:
           linewrapEnabled: false
-      davis:
-        enabled: false
-        davisVisualization:
-          isAvailable: true
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
     "18":
       title: "Anomaly Signal Volume Over Time — Kubernetes & Metric Events"
@@ -443,15 +453,69 @@ content:
           legend:
             position: bottom
             showLegend: true
-      davis:
-        enabled: false
-        davisVisualization:
-          isAvailable: true
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
+    # ════════════════════════════════════════════════════════════
+    # SECTION: AUTOMATION EFFECTIVENESS
+    # ════════════════════════════════════════════════════════════
+    "29":
+      title: ""
+      type: markdown
+      content: |
+        ### 📊 Automation Effectiveness
+        Quantifies how well the automation is performing end-to-end. **% Auto-Resolved** (problems closed in under 15 minutes) is a proxy for automated remediation — human-driven resolution rarely completes that quickly. **Pattern rows with a null `problem.display.id`** mean the automation check ran but found no matching active problem, which is the ideal healthy state. Fail rows with a non-null problem ID indicate a remediation attempt that did not succeed.
+
+    "30":
+      title: "Automation Patterns — Execution Log (Problem × Pattern × Outcome)"
+      type: data
+      query: |
+        fetch bizevents
+        | filter event.provider == "workflows"
+          and event.type == "demoability.test.problem-pattern"
+        | fields timestamp, pattern.name, pattern.application,
+            pattern.status, problem.display.id
+        | sort timestamp desc
+        | limit 25
+      visualization: table
+      visualizationSettings:
+        autoSelectVisualization: false
+        table:
+          linewrapEnabled: false
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
+
+    "31":
+      title: "Resolution Time Distribution by Category"
+      type: data
+      query: |
+        fetch dt.davis.problems
+        | filter not(dt.davis.is_duplicate) and event.status == "CLOSED"
+          and isNotNull(resolved_problem_duration)
+        | fieldsAdd duration_min = resolved_problem_duration / 1min
+        | fieldsAdd duration_bucket = if(duration_min < 5,
+            then: "⚡ < 5 min",
+            else: if(duration_min < 15,
+              then: "🟢 5–15 min",
+              else: if(duration_min < 60,
+                then: "🟡 15–60 min",
+                else: "🔴 > 60 min")))
+        | summarize count = count(), by: {event.category, duration_bucket}
+        | sort event.category asc
+      visualization: table
+      visualizationSettings:
+        autoSelectVisualization: false
+        table:
+          linewrapEnabled: false
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
+
+    # ════════════════════════════════════════════════════════════
+    # SECTION: RECURRING PROBLEM DETECTION
+    # ════════════════════════════════════════════════════════════
     "19":
       title: ""
       type: markdown
-      content: "### ♻️ Recurring Problem Detection — Automation Masking Root Causes?"
+      content: |
+        ### ♻️ Recurring Problem Detection — The Automation Debt Meter
+        Each row here represents a problem that has been detected — and presumably resolved — more than once. **High `occurrences` with `active_now > 0` is the highest-priority signal**: automation is cycling on this issue right now. The key question is whether automation is buying time while a fix is developed, or has silently become a permanent workaround that masks a systemic failure nobody is fixing.
 
     "20":
       title: "Problems Recurring by Name — Potential Unresolved Root Causes"
@@ -472,10 +536,7 @@ content:
         autoSelectVisualization: false
         table:
           linewrapEnabled: true
-      davis:
-        enabled: false
-        davisVisualization:
-          isAvailable: true
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
     "21":
       title: "Problem Resolution Rate Over Time"
@@ -483,7 +544,8 @@ content:
       query: |
         fetch dt.davis.problems
         | filter not(dt.davis.is_duplicate)
-        | makeTimeseries active = countIf(event.status == "ACTIVE"),
+        | makeTimeseries
+            active = countIf(event.status == "ACTIVE"),
             resolved = countIf(event.status == "CLOSED"),
             interval: 30m
       visualization: areaChart
@@ -494,15 +556,17 @@ content:
             position: bottom
             showLegend: true
           stacked: false
-      davis:
-        enabled: false
-        davisVisualization:
-          isAvailable: true
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
+    # ════════════════════════════════════════════════════════════
+    # SECTION: CI/CD & DEPLOYMENT CONTEXT
+    # ════════════════════════════════════════════════════════════
     "22":
       title: ""
       type: markdown
-      content: "### 🚀 CI/CD & Deployment Context"
+      content: |
+        ### 🚀 CI/CD & Deployment Context
+        Correlation between deployment events and problem spikes. **Problems appearing within 30–60 minutes of a deployment are prime regression candidates** — check whether automation has rollback or canary-abort workflows configured for those services. The slowdown table is especially valuable here: degraded response times post-deploy often indicate resource leaks or unoptimized queries introduced in the change.
 
     "23":
       title: "CI/CD Events — GitHub & Azure DevOps"
@@ -518,10 +582,7 @@ content:
         autoSelectVisualization: false
         table:
           linewrapEnabled: false
-      davis:
-        enabled: false
-        davisVisualization:
-          isAvailable: true
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
     "24":
       title: "Slowdown & Performance Degradation Problems"
@@ -539,7 +600,4 @@ content:
         autoSelectVisualization: false
         table:
           linewrapEnabled: false
-      davis:
-        enabled: false
-        davisVisualization:
-          isAvailable: true
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
