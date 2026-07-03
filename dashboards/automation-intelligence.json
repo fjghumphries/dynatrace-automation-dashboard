@@ -1,0 +1,367 @@
+{
+  "name": "Automation Intelligence Center",
+  "type": "dashboard",
+  "content": {
+    "version": 21,
+    "variables": [],
+    "tiles": {
+      "1": {
+        "type": "markdown",
+        "content": "## 🤖 Automation Intelligence Center\n**Problem → Workflow correlation · Remediation health · Root cause recurrence · MTTR analysis**\n*Detect where automation is masking root causes instead of fixing them*"
+      },
+      "2": {
+        "type": "data",
+        "title": "🔴 Active Problems",
+        "query": "fetch dt.davis.problems | filter not(dt.davis.is_duplicate) and event.status == \"ACTIVE\" | summarize active_problems = count()",
+        "visualization": "singleValue",
+        "visualizationSettings": {
+          "singleValue": {
+            "showLabel": true,
+            "label": "Active Problems",
+            "autoscale": true,
+            "alignment": "center"
+          },
+          "thresholds": [
+            {
+              "field": "active_problems",
+              "rules": [
+                { "condition": "> 20", "value": 20, "color": "#DC2626" },
+                { "condition": "> 10", "value": 10, "color": "#F97316" },
+                { "condition": "> 0", "value": 0, "color": "#EAB308" }
+              ]
+            }
+          ]
+        },
+        "querySettings": {}
+      },
+      "3": {
+        "type": "data",
+        "title": "⛔ Availability Issues",
+        "query": "fetch dt.davis.problems | filter not(dt.davis.is_duplicate) and event.status == \"ACTIVE\" and event.category == \"AVAILABILITY\" | summarize count = count()",
+        "visualization": "singleValue",
+        "visualizationSettings": {
+          "singleValue": {
+            "showLabel": true,
+            "label": "Availability",
+            "autoscale": true,
+            "alignment": "center"
+          },
+          "thresholds": [
+            {
+              "field": "count",
+              "rules": [
+                { "condition": "> 5", "value": 5, "color": "#DC2626" },
+                { "condition": "> 0", "value": 0, "color": "#F97316" }
+              ]
+            }
+          ]
+        },
+        "querySettings": {}
+      },
+      "4": {
+        "type": "data",
+        "title": "🚨 Error Rate Problems",
+        "query": "fetch dt.davis.problems | filter not(dt.davis.is_duplicate) and event.status == \"ACTIVE\" and event.category == \"ERROR\" | summarize count = count()",
+        "visualization": "singleValue",
+        "visualizationSettings": {
+          "singleValue": {
+            "showLabel": true,
+            "label": "Errors",
+            "autoscale": true,
+            "alignment": "center"
+          },
+          "thresholds": [
+            {
+              "field": "count",
+              "rules": [
+                { "condition": "> 5", "value": 5, "color": "#DC2626" },
+                { "condition": "> 0", "value": 0, "color": "#F97316" }
+              ]
+            }
+          ]
+        },
+        "querySettings": {}
+      },
+      "5": {
+        "type": "data",
+        "title": "⚠️ Resource Contention",
+        "query": "fetch dt.davis.problems | filter not(dt.davis.is_duplicate) and event.status == \"ACTIVE\" and event.category == \"RESOURCE_CONTENTION\" | summarize count = count()",
+        "visualization": "singleValue",
+        "visualizationSettings": {
+          "singleValue": {
+            "showLabel": true,
+            "label": "Resource",
+            "autoscale": true,
+            "alignment": "center"
+          },
+          "thresholds": [
+            {
+              "field": "count",
+              "rules": [
+                { "condition": "> 3", "value": 3, "color": "#F97316" },
+                { "condition": "> 0", "value": 0, "color": "#EAB308" }
+              ]
+            }
+          ]
+        },
+        "querySettings": {}
+      },
+      "6": {
+        "type": "data",
+        "title": "✅ Closed (Resolved)",
+        "query": "fetch dt.davis.problems | filter not(dt.davis.is_duplicate) and event.status == \"CLOSED\" | summarize resolved = count()",
+        "visualization": "singleValue",
+        "visualizationSettings": {
+          "singleValue": {
+            "showLabel": true,
+            "label": "Resolved",
+            "autoscale": true,
+            "alignment": "center"
+          },
+          "thresholds": [
+            {
+              "field": "resolved",
+              "rules": [
+                { "condition": "> 0", "value": 0, "color": "#16A34A" }
+              ]
+            }
+          ]
+        },
+        "querySettings": {}
+      },
+      "7": {
+        "type": "markdown",
+        "content": "### 🌐 Problem Landscape"
+      },
+      "8": {
+        "type": "data",
+        "title": "Active Problems by Category",
+        "query": "fetch dt.davis.problems | filter not(dt.davis.is_duplicate) and event.status == \"ACTIVE\" | summarize count(), by: {event.category} | sort `count()` desc",
+        "visualization": "donutChart",
+        "visualizationSettings": {
+          "donutChart": {
+            "legend": {
+              "position": "right",
+              "visible": true
+            }
+          },
+          "colorPalette": "categorical"
+        },
+        "querySettings": {}
+      },
+      "9": {
+        "type": "data",
+        "title": "Problem Activity Over Time — by Category",
+        "query": "fetch dt.davis.problems | filter not(dt.davis.is_duplicate) | makeTimeseries active = countIf(event.status == \"ACTIVE\"), closed = countIf(event.status == \"CLOSED\"), interval: 30m, by: {event.category}",
+        "visualization": "areaChart",
+        "visualizationSettings": {
+          "areaChart": {
+            "stacking": "none"
+          },
+          "legend": {
+            "position": "bottom",
+            "visible": true
+          }
+        },
+        "querySettings": {}
+      },
+      "10": {
+        "type": "markdown",
+        "content": "### 📋 Problem Details & Entity Impact"
+      },
+      "11": {
+        "type": "data",
+        "title": "Recent Problems — Status, Root Cause & Blast Radius",
+        "query": "fetch dt.davis.problems | filter not(dt.davis.is_duplicate) | fields display_id, event.name, event.category, event.status, event.start, root_cause_entity_name, affected_count = arraySize(smartscape.affected_entity.ids) | sort event.start desc | limit 25",
+        "visualization": "table",
+        "visualizationSettings": {
+          "table": {
+            "rowDensity": "comfortable",
+            "enableSparklines": false,
+            "hiddenColumns": [],
+            "columnWidths": {}
+          }
+        },
+        "querySettings": {}
+      },
+      "12": {
+        "type": "data",
+        "title": "Problems per Entity Type (Active)",
+        "query": "fetch dt.davis.problems | filter not(dt.davis.is_duplicate) and event.status == \"ACTIVE\" | filter isNotNull(smartscape.affected_entity.types) | fieldsAdd entity_type = arrayToString(smartscape.affected_entity.types, delimiter: \",\") | summarize total = count(), avg_blast_radius = avg(arraySize(smartscape.affected_entity.ids)), by: {entity_type} | sort total desc | limit 10",
+        "visualization": "categoricalBarChart",
+        "visualizationSettings": {
+          "categoricalBarChart": {
+            "categoryAxis": { "visible": true },
+            "valueAxis": { "visible": true },
+            "tooltipVariant": "double",
+            "orientation": "horizontal"
+          },
+          "colorPalette": "categorical"
+        },
+        "querySettings": {}
+      },
+      "13": {
+        "type": "markdown",
+        "content": "### 🔬 Root Cause Intelligence"
+      },
+      "14": {
+        "type": "data",
+        "title": "Known Root Causes — Recurrence & Active Status",
+        "query": "fetch dt.davis.problems | filter not(dt.davis.is_duplicate) | filter isNotNull(root_cause_entity_name) | summarize total_problems = count(), active_now = countIf(event.status == \"ACTIVE\"), last_seen = max(event.start), by: {root_cause_entity_name} | sort total_problems desc | limit 15",
+        "visualization": "table",
+        "visualizationSettings": {
+          "table": {
+            "rowDensity": "comfortable",
+            "enableSparklines": false,
+            "hiddenColumns": [],
+            "columnWidths": {}
+          }
+        },
+        "querySettings": {}
+      },
+      "15": {
+        "type": "data",
+        "title": "Avg Time to Resolve — by Problem Category (minutes)",
+        "query": "fetch dt.davis.problems | filter not(dt.davis.is_duplicate) | fieldsAdd duration_min = (coalesce(event.end, now()) - event.start) / 1000000000 / 60 | summarize mttr_min = avg(duration_min), by: {event.category} | sort mttr_min desc",
+        "visualization": "categoricalBarChart",
+        "visualizationSettings": {
+          "categoricalBarChart": {
+            "categoryAxis": { "visible": true },
+            "valueAxis": { "visible": true },
+            "tooltipVariant": "double",
+            "orientation": "horizontal"
+          },
+          "colorPalette": "categorical"
+        },
+        "querySettings": {}
+      },
+      "16": {
+        "type": "markdown",
+        "content": "### 🤖 Automation & Workflow Activity"
+      },
+      "17": {
+        "type": "data",
+        "title": "Workflow Executions — Pass / Fail Summary",
+        "query": "fetch bizevents | filter event.provider == \"workflows\" | summarize executions = count(), passed = countIf(test.result == \"pass\"), failed = countIf(test.result == \"fail\"), by: {event.type} | sort executions desc",
+        "visualization": "table",
+        "visualizationSettings": {
+          "table": {
+            "rowDensity": "comfortable",
+            "enableSparklines": false,
+            "hiddenColumns": [],
+            "columnWidths": {}
+          }
+        },
+        "querySettings": {}
+      },
+      "18": {
+        "type": "data",
+        "title": "Anomaly Signal Volume Over Time — Kubernetes & Metric Events",
+        "query": "fetch events | filter event.provider == \"METRIC_EVENTS\" or event.provider == \"KUBERNETES_ANOMALY_DETECTION\" | makeTimeseries count = count(), interval: 30m, by: {event.type}",
+        "visualization": "lineChart",
+        "visualizationSettings": {
+          "legend": {
+            "position": "bottom",
+            "visible": true
+          }
+        },
+        "querySettings": {}
+      },
+      "19": {
+        "type": "markdown",
+        "content": "### ♻️ Recurring Problem Detection"
+      },
+      "20": {
+        "type": "data",
+        "title": "Problems Recurring by Name — Potential Unresolved Root Causes",
+        "query": "fetch dt.davis.problems | filter not(dt.davis.is_duplicate) | summarize occurrences = count(), active_now = countIf(event.status == \"ACTIVE\"), first_seen = min(event.start), last_seen = max(event.start), by: {event.name} | filter occurrences > 1 | sort occurrences desc | limit 20",
+        "visualization": "table",
+        "visualizationSettings": {
+          "table": {
+            "rowDensity": "comfortable",
+            "enableSparklines": false,
+            "hiddenColumns": [],
+            "columnWidths": {}
+          }
+        },
+        "querySettings": {}
+      },
+      "21": {
+        "type": "data",
+        "title": "Problem Resolution Rate Over Time",
+        "query": "fetch dt.davis.problems | filter not(dt.davis.is_duplicate) | makeTimeseries active = countIf(event.status == \"ACTIVE\"), resolved = countIf(event.status == \"CLOSED\"), interval: 30m",
+        "visualization": "areaChart",
+        "visualizationSettings": {
+          "areaChart": {
+            "stacking": "none"
+          },
+          "legend": {
+            "position": "bottom",
+            "visible": true
+          }
+        },
+        "querySettings": {}
+      },
+      "22": {
+        "type": "markdown",
+        "content": "### 🚀 CI/CD & Deployment Context"
+      },
+      "23": {
+        "type": "data",
+        "title": "CI/CD Events — GitHub & Azure DevOps",
+        "query": "fetch events | filter event.provider == \"github.com\" or event.provider == \"azure.devops\" | summarize deployments = count(), by: {event.provider, event.type} | sort deployments desc | limit 15",
+        "visualization": "categoricalBarChart",
+        "visualizationSettings": {
+          "categoricalBarChart": {
+            "categoryAxis": { "visible": true },
+            "valueAxis": { "visible": true },
+            "orientation": "vertical"
+          },
+          "colorPalette": "categorical"
+        },
+        "querySettings": {}
+      },
+      "24": {
+        "type": "data",
+        "title": "Slowdown Problems — Response Time Degradations",
+        "query": "fetch dt.davis.problems | filter not(dt.davis.is_duplicate) and event.category == \"SLOWDOWN\" | fields display_id, event.name, event.status, event.start, root_cause_entity_name, affected_count = arraySize(smartscape.affected_entity.ids) | sort event.start desc | limit 15",
+        "visualization": "table",
+        "visualizationSettings": {
+          "table": {
+            "rowDensity": "comfortable",
+            "enableSparklines": false,
+            "hiddenColumns": [],
+            "columnWidths": {}
+          }
+        },
+        "querySettings": {}
+      }
+    },
+    "layouts": {
+      "1":  { "x": 0,  "y": 0,  "w": 20, "h": 2 },
+      "2":  { "x": 0,  "y": 2,  "w": 4,  "h": 3 },
+      "3":  { "x": 4,  "y": 2,  "w": 4,  "h": 3 },
+      "4":  { "x": 8,  "y": 2,  "w": 4,  "h": 3 },
+      "5":  { "x": 12, "y": 2,  "w": 4,  "h": 3 },
+      "6":  { "x": 16, "y": 2,  "w": 4,  "h": 3 },
+      "7":  { "x": 0,  "y": 5,  "w": 20, "h": 1 },
+      "8":  { "x": 0,  "y": 6,  "w": 5,  "h": 8 },
+      "9":  { "x": 5,  "y": 6,  "w": 15, "h": 8 },
+      "10": { "x": 0,  "y": 14, "w": 20, "h": 1 },
+      "11": { "x": 0,  "y": 15, "w": 13, "h": 8 },
+      "12": { "x": 13, "y": 15, "w": 7,  "h": 8 },
+      "13": { "x": 0,  "y": 23, "w": 20, "h": 1 },
+      "14": { "x": 0,  "y": 24, "w": 10, "h": 8 },
+      "15": { "x": 10, "y": 24, "w": 10, "h": 8 },
+      "16": { "x": 0,  "y": 32, "w": 20, "h": 1 },
+      "17": { "x": 0,  "y": 33, "w": 8,  "h": 8 },
+      "18": { "x": 8,  "y": 33, "w": 12, "h": 8 },
+      "19": { "x": 0,  "y": 41, "w": 20, "h": 1 },
+      "20": { "x": 0,  "y": 42, "w": 12, "h": 8 },
+      "21": { "x": 12, "y": 42, "w": 8,  "h": 8 },
+      "22": { "x": 0,  "y": 50, "w": 20, "h": 1 },
+      "23": { "x": 0,  "y": 51, "w": 10, "h": 8 },
+      "24": { "x": 10, "y": 51, "w": 10, "h": 8 }
+    }
+  }
+}
