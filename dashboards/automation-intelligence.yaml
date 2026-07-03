@@ -8,401 +8,257 @@ content:
     defaultTimeframe:
       enabled: true
       value:
-        from: now()-2h
+        from: now()-24h
         to: now()
   layouts:
-    # ── Main Header ──────────────────────────────────────────
+    # ── Header ────────────────────────────────────────────────
     "1":  { x: 0,  "y": 0,  w: 24, h: 3 }
-    # ── KPI Row 1: Problem Health ─────────────────────────────
-    "2":  { x: 0,  "y": 3,  w: 5,  h: 3 }
-    "3":  { x: 5,  "y": 3,  w: 5,  h: 3 }
-    "4":  { x: 10, "y": 3,  w: 5,  h: 3 }
-    "5":  { x: 15, "y": 3,  w: 5,  h: 3 }
-    "6":  { x: 20, "y": 3,  w: 4,  h: 3 }
-    # ── KPI Row 2: Automation Health ──────────────────────────
-    "25": { x: 0,  "y": 6,  w: 6,  h: 3 }
-    "26": { x: 6,  "y": 6,  w: 6,  h: 3 }
-    "27": { x: 12, "y": 6,  w: 6,  h: 3 }
-    "28": { x: 18, "y": 6,  w: 6,  h: 3 }
-    # ── Section: Problem Landscape ────────────────────────────
-    "7":  { x: 0,  "y": 9,  w: 24, h: 2 }
-    "8":  { x: 0,  "y": 11, w: 6,  h: 7 }
-    "9":  { x: 6,  "y": 11, w: 18, h: 7 }
-    # ── Section: Problem Details ──────────────────────────────
-    "10": { x: 0,  "y": 18, w: 24, h: 2 }
-    "11": { x: 0,  "y": 20, w: 15, h: 7 }
-    "12": { x: 15, "y": 20, w: 9,  h: 7 }
-    # ── Section: Root Cause Intelligence ──────────────────────
-    "13": { x: 0,  "y": 27, w: 24, h: 2 }
-    "14": { x: 0,  "y": 29, w: 12, h: 7 }
-    "15": { x: 12, "y": 29, w: 12, h: 7 }
-    # ── Section: Automation & Workflow Activity ────────────────
-    "16": { x: 0,  "y": 36, w: 24, h: 2 }
-    "17": { x: 0,  "y": 38, w: 9,  h: 7 }
-    "18": { x: 9,  "y": 38, w: 15, h: 7 }
-    # ── Section: Automation Effectiveness ─────────────────────
-    "29": { x: 0,  "y": 45, w: 24, h: 2 }
-    "30": { x: 0,  "y": 47, w: 13, h: 7 }
-    "31": { x: 13, "y": 47, w: 11, h: 7 }
-    # ── Section: Recurring Problem Detection ──────────────────
-    "19": { x: 0,  "y": 54, w: 24, h: 2 }
-    "20": { x: 0,  "y": 56, w: 14, h: 7 }
-    "21": { x: 14, "y": 56, w: 10, h: 7 }
-    # ── Section: CI/CD & Deployment Context ───────────────────
-    "22": { x: 0,  "y": 63, w: 24, h: 2 }
-    "23": { x: 0,  "y": 65, w: 12, h: 7 }
-    "24": { x: 12, "y": 65, w: 12, h: 7 }
+    # ── KPI Row ───────────────────────────────────────────────
+    "2":  { x: 0,  "y": 3,  w: 6,  h: 3 }
+    "3":  { x: 6,  "y": 3,  w: 6,  h: 3 }
+    "4":  { x: 12, "y": 3,  w: 6,  h: 3 }
+    "5":  { x: 18, "y": 3,  w: 6,  h: 3 }
+    # ── Section: Entity Automation Loops ──────────────────────
+    "6":  { x: 0,  "y": 6,  w: 24, h: 2 }
+    "7":  { x: 0,  "y": 8,  w: 12, h: 8 }
+    "8":  { x: 12, "y": 8,  w: 12, h: 8 }
+    # ── Section: Workflow Activity ─────────────────────────────
+    "9":  { x: 0,  "y": 16, w: 24, h: 2 }
+    "10": { x: 0,  "y": 18, w: 10, h: 7 }
+    "11": { x: 10, "y": 18, w: 14, h: 7 }
+    # ── Section: ServiceNow Integration ───────────────────────
+    "12": { x: 0,  "y": 25, w: 24, h: 2 }
+    "13": { x: 0,  "y": 27, w: 14, h: 8 }
+    "14": { x: 14, "y": 27, w: 10, h: 8 }
 
   tiles:
 
     # ════════════════════════════════════════════════════════════
-    # MAIN HEADER
+    # HEADER
     # ════════════════════════════════════════════════════════════
     "1":
       title: ""
       type: markdown
       content: |
         ## 🤖 Automation Intelligence Center
-        Visualize the full lifecycle of problems and their automated responses — from detection through remediation. Use this dashboard to understand **where automation is working**, where it is **masking unresolved root causes**, and which issues are **cycling indefinitely** without a permanent fix.
+        Every tile here starts from **workflow executions triggered by Davis problems** — sourced directly from the Automation Engine via `dt.system.events`. Problems that never triggered a workflow are excluded entirely.
 
-        > **Key questions to answer:** Are problems being auto-resolved or just temporarily suppressed? Which issues keep recurring? Is automation coverage growing fast enough to match the problem rate?
+        > **What to look for:** Entities with high trigger counts and `active_now > 0` are your automation debt — the remediation fired but the root cause persists. The same entity triggering the same workflow repeatedly is the clearest signal that the fix is superficial.
 
     # ════════════════════════════════════════════════════════════
-    # KPI ROW 1 — PROBLEM HEALTH
+    # KPI ROW
     # ════════════════════════════════════════════════════════════
     "2":
-      title: "Active Problems"
+      title: "Problem-Triggered Executions"
       type: data
       query: |
-        fetch dt.davis.problems
-        | filter not(dt.davis.is_duplicate) and event.status == "ACTIVE"
-        | summarize active_problems = count()
+        fetch dt.system.events
+        | filter event.kind == "WORKFLOW_EVENT" and event.type == "WORKFLOW_EXECUTION"
+        | filter dt.automation_engine.workflow_execution.trigger.type == "Event"
+        | filter dt.automation_engine.state.is_final == true
+        | filter isNotNull(dt.automation_engine.workflow_execution.trigger.event.id)
+        | fields trigger_event_id = dt.automation_engine.workflow_execution.trigger.event.id
+        | lookup [
+            fetch events
+            | filter event.kind == "DAVIS_PROBLEM"
+            | fields event.id
+          ],
+          sourceField: trigger_event_id,
+          lookupField: event.id
+        | filter isNotNull(lookup.event.id)
+        | summarize total_triggers = count()
       visualization: singleValue
       visualizationSettings:
         autoSelectVisualization: false
         singleValue:
           showLabel: true
-          label: "Active Problems"
-          recordField: active_problems
+          label: "Workflow Triggers"
+          recordField: total_triggers
       coloring:
         colorRules:
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: active_problems, value: -1 }
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#eea53c" }, field: active_problems, value: 10 }
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#c62239" }, field: active_problems, value: 20 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: total_triggers, value: -1 }
       davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
     "3":
-      title: "Availability Issues"
+      title: "Execution Success Rate %"
       type: data
       query: |
-        fetch dt.davis.problems
-        | filter not(dt.davis.is_duplicate) and event.status == "ACTIVE"
-          and event.category == "AVAILABILITY"
-        | summarize count = count()
+        fetch dt.system.events
+        | filter event.kind == "WORKFLOW_EVENT" and event.type == "WORKFLOW_EXECUTION"
+        | filter dt.automation_engine.workflow_execution.trigger.type == "Event"
+        | filter dt.automation_engine.state.is_final == true
+        | filter isNotNull(dt.automation_engine.workflow_execution.trigger.event.id)
+        | fields
+            state = dt.automation_engine.state,
+            trigger_event_id = dt.automation_engine.workflow_execution.trigger.event.id
+        | lookup [
+            fetch events
+            | filter event.kind == "DAVIS_PROBLEM"
+            | fields event.id
+          ],
+          sourceField: trigger_event_id,
+          lookupField: event.id
+        | filter isNotNull(lookup.event.id)
+        | summarize total = count(), success = countIf(state == "SUCCESS")
+        | fieldsAdd pct_success = success * 100 / total
       visualization: singleValue
       visualizationSettings:
         autoSelectVisualization: false
         singleValue:
           showLabel: true
-          label: "Availability"
-          recordField: count
+          label: "Success Rate"
+          recordField: pct_success
       coloring:
         colorRules:
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: count, value: -1 }
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#eea53c" }, field: count, value: 2 }
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#c62239" }, field: count, value: 5 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#c62239" }, field: pct_success, value: -1 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#eea53c" }, field: pct_success, value: 60 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: pct_success, value: 80 }
       davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
     "4":
-      title: "Error Rate Problems"
+      title: "Entities with Open Problems Post-Automation"
       type: data
       query: |
-        fetch dt.davis.problems
-        | filter not(dt.davis.is_duplicate) and event.status == "ACTIVE"
-          and event.category == "ERROR"
-        | summarize count = count()
+        fetch dt.system.events
+        | filter event.kind == "WORKFLOW_EVENT" and event.type == "WORKFLOW_EXECUTION"
+        | filter dt.automation_engine.workflow_execution.trigger.type == "Event"
+        | filter dt.automation_engine.state.is_final == true
+        | filter isNotNull(dt.automation_engine.workflow_execution.trigger.event.id)
+        | fields trigger_event_id = dt.automation_engine.workflow_execution.trigger.event.id
+        | lookup [
+            fetch events
+            | filter event.kind == "DAVIS_PROBLEM"
+            | fields event.id, event.status, affected_entity_names
+          ],
+          sourceField: trigger_event_id,
+          lookupField: event.id
+        | filter isNotNull(lookup.event.id) and lookup.event.status == "ACTIVE"
+        | expand entity = lookup.affected_entity_names
+        | summarize still_open = countDistinct(entity)
       visualization: singleValue
       visualizationSettings:
         autoSelectVisualization: false
         singleValue:
           showLabel: true
-          label: "Errors"
-          recordField: count
+          label: "Still Active"
+          recordField: still_open
       coloring:
         colorRules:
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: count, value: -1 }
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#eea53c" }, field: count, value: 2 }
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#c62239" }, field: count, value: 5 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: still_open, value: -1 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#eea53c" }, field: still_open, value: 5 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#c62239" }, field: still_open, value: 15 }
       davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
     "5":
-      title: "Resource Contention"
+      title: "Failed Workflow Executions"
       type: data
       query: |
-        fetch dt.davis.problems
-        | filter not(dt.davis.is_duplicate) and event.status == "ACTIVE"
-          and event.category == "RESOURCE_CONTENTION"
-        | summarize count = count()
+        fetch dt.system.events
+        | filter event.kind == "WORKFLOW_EVENT" and event.type == "WORKFLOW_EXECUTION"
+        | filter dt.automation_engine.workflow_execution.trigger.type == "Event"
+        | filter dt.automation_engine.state.is_final == true
+        | filter dt.automation_engine.state == "ERROR"
+        | filter isNotNull(dt.automation_engine.workflow_execution.trigger.event.id)
+        | fields trigger_event_id = dt.automation_engine.workflow_execution.trigger.event.id
+        | lookup [
+            fetch events
+            | filter event.kind == "DAVIS_PROBLEM"
+            | fields event.id
+          ],
+          sourceField: trigger_event_id,
+          lookupField: event.id
+        | filter isNotNull(lookup.event.id)
+        | summarize failed_executions = count()
       visualization: singleValue
       visualizationSettings:
         autoSelectVisualization: false
         singleValue:
           showLabel: true
-          label: "Resource"
-          recordField: count
+          label: "Failed Executions"
+          recordField: failed_executions
       coloring:
         colorRules:
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: count, value: -1 }
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#eea53c" }, field: count, value: 2 }
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#c62239" }, field: count, value: 5 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: failed_executions, value: -1 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#eea53c" }, field: failed_executions, value: 3 }
+          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#c62239" }, field: failed_executions, value: 10 }
       davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
+    # ════════════════════════════════════════════════════════════
+    # SECTION: ENTITY AUTOMATION LOOPS
+    # ════════════════════════════════════════════════════════════
     "6":
-      title: "Resolved (Closed)"
-      type: data
-      query: |
-        fetch dt.davis.problems
-        | filter not(dt.davis.is_duplicate) and event.status == "CLOSED"
-        | summarize resolved = count()
-      visualization: singleValue
-      visualizationSettings:
-        autoSelectVisualization: false
-        singleValue:
-          showLabel: true
-          label: "Resolved"
-          recordField: resolved
-      coloring:
-        colorRules:
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: resolved, value: -1 }
-      davis: { enabled: false, davisVisualization: { isAvailable: true } }
-
-    # ════════════════════════════════════════════════════════════
-    # KPI ROW 2 — AUTOMATION HEALTH
-    # ════════════════════════════════════════════════════════════
-    "25":
-      title: "% Auto-Resolved (< 15 min)"
-      type: data
-      query: |
-        fetch dt.davis.problems
-        | filter not(dt.davis.is_duplicate) and event.status == "CLOSED"
-          and isNotNull(resolved_problem_duration)
-        | fieldsAdd duration_min = resolved_problem_duration / 1min
-        | summarize total_closed = count(), fast_resolved = countIf(duration_min < 15)
-        | fieldsAdd pct_auto_resolved = fast_resolved * 100 / total_closed
-      visualization: singleValue
-      visualizationSettings:
-        autoSelectVisualization: false
-        singleValue:
-          showLabel: true
-          label: "% Auto-Resolved"
-          recordField: pct_auto_resolved
-      coloring:
-        colorRules:
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#c62239" }, field: pct_auto_resolved, value: -1 }
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#eea53c" }, field: pct_auto_resolved, value: 40 }
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: pct_auto_resolved, value: 70 }
-      davis: { enabled: false, davisVisualization: { isAvailable: true } }
-
-    "26":
-      title: "Automation Pass Rate %"
-      type: data
-      query: |
-        fetch bizevents
-        | filter event.provider == "workflows"
-          and event.type == "demoability.test.problem-pattern"
-        | summarize total = count(), pass = countIf(pattern.status == "pass")
-        | fieldsAdd pct_pass = pass * 100 / total
-      visualization: singleValue
-      visualizationSettings:
-        autoSelectVisualization: false
-        singleValue:
-          showLabel: true
-          label: "Pattern Pass Rate"
-          recordField: pct_pass
-      coloring:
-        colorRules:
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#c62239" }, field: pct_pass, value: -1 }
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#eea53c" }, field: pct_pass, value: 60 }
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: pct_pass, value: 80 }
-      davis: { enabled: false, davisVisualization: { isAvailable: true } }
-
-    "27":
-      title: "Workflow Executions"
-      type: data
-      query: |
-        fetch bizevents
-        | filter event.provider == "workflows"
-        | summarize executions = count()
-      visualization: singleValue
-      visualizationSettings:
-        autoSelectVisualization: false
-        singleValue:
-          showLabel: true
-          label: "Executions"
-          recordField: executions
-      coloring:
-        colorRules:
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: executions, value: -1 }
-      davis: { enabled: false, davisVisualization: { isAvailable: true } }
-
-    "28":
-      title: "Frequent / Recurring Issues"
-      type: data
-      query: |
-        fetch dt.davis.problems
-        | filter not(dt.davis.is_duplicate) and event.status == "ACTIVE"
-          and dt.davis.is_frequent_event == true
-        | summarize frequent_count = count()
-      visualization: singleValue
-      visualizationSettings:
-        autoSelectVisualization: false
-        singleValue:
-          showLabel: true
-          label: "Frequent Issues"
-          recordField: frequent_count
-      coloring:
-        colorRules:
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#2f6862" }, field: frequent_count, value: -1 }
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#eea53c" }, field: frequent_count, value: 0 }
-          - { colorMode: custom-color, comparator: ">", customColor: { Default: "#c62239" }, field: frequent_count, value: 5 }
-      davis: { enabled: false, davisVisualization: { isAvailable: true } }
-
-    # ════════════════════════════════════════════════════════════
-    # SECTION: PROBLEM LANDSCAPE
-    # ════════════════════════════════════════════════════════════
-    "7":
       title: ""
       type: markdown
       content: |
-        ### 🌐 Problem Landscape
-        The current distribution and trend of all detected problems. **A growing active count with flat automation executions signals a coverage gap** — new problem types are appearing that no workflow is configured to handle. Spikes in AVAILABILITY are highest priority as they indicate user-facing outages.
+        ### ♻️ Entity Automation Loops
+        Entities ranked by how many times they have triggered a workflow. **`active_now > 0` while `workflow_triggers > 1`** means a workflow is firing repeatedly without closing the problem — the clearest sign of a superficial fix. The right tile narrows to entity × workflow pairs that repeat, pinpointing exactly which automation is cycling on the same issue.
+
+    "7":
+      title: "Entities by Workflow Trigger Frequency"
+      type: data
+      query: |
+        fetch dt.system.events
+        | filter event.kind == "WORKFLOW_EVENT" and event.type == "WORKFLOW_EXECUTION"
+        | filter dt.automation_engine.workflow_execution.trigger.type == "Event"
+        | filter dt.automation_engine.state.is_final == true
+        | filter isNotNull(dt.automation_engine.workflow_execution.trigger.event.id)
+        | fields
+            workflow_title = dt.automation_engine.workflow.title,
+            state = dt.automation_engine.state,
+            trigger_event_id = dt.automation_engine.workflow_execution.trigger.event.id
+        | lookup [
+            fetch events
+            | filter event.kind == "DAVIS_PROBLEM"
+            | fields event.id, event.category, event.status, affected_entity_names
+          ],
+          sourceField: trigger_event_id,
+          lookupField: event.id
+        | filter isNotNull(lookup.event.id)
+        | expand entity = lookup.affected_entity_names
+        | summarize
+            workflow_triggers = count(),
+            active_now = countIf(lookup.event.status == "ACTIVE"),
+            unique_workflows = countDistinct(workflow_title),
+            problem_categories = arrayToString(collectDistinct(lookup.event.category), delimiter: ", "),
+            by: {entity}
+        | sort workflow_triggers desc
+        | limit 20
+      visualization: table
+      visualizationSettings:
+        autoSelectVisualization: false
+        table:
+          linewrapEnabled: false
+      davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
     "8":
-      title: "Active Problems by Category"
+      title: "Superficial Remediation Detector — Same Entity × Same Workflow Repeated"
       type: data
       query: |
-        fetch dt.davis.problems
-        | filter not(dt.davis.is_duplicate) and event.status == "ACTIVE"
-        | summarize count(), by: {event.category}
-        | sort `count()` desc
-      visualization: pieChart
-      visualizationSettings:
-        autoSelectVisualization: false
-      davis: { enabled: false, davisVisualization: { isAvailable: true } }
-
-    "9":
-      title: "Problem Activity Over Time — Active vs Closed by Category"
-      type: data
-      query: |
-        fetch dt.davis.problems
-        | filter not(dt.davis.is_duplicate)
-        | makeTimeseries
-            active = countIf(event.status == "ACTIVE"),
-            closed = countIf(event.status == "CLOSED"),
-            interval: 30m,
-            by: {event.category}
-      visualization: areaChart
-      visualizationSettings:
-        autoSelectVisualization: false
-        chartSettings:
-          legend:
-            position: bottom
-            showLegend: true
-          stacked: false
-      davis: { enabled: false, davisVisualization: { isAvailable: true } }
-
-    # ════════════════════════════════════════════════════════════
-    # SECTION: PROBLEM DETAILS & ENTITY IMPACT
-    # ════════════════════════════════════════════════════════════
-    "10":
-      title: ""
-      type: markdown
-      content: |
-        ### 📋 Problem Details & Entity Impact
-        Individual problem records with root cause attribution and blast radius. **High `affected_count` values signal cascading failures** — a single root cause spreading across services or nodes. Empty `root_cause_entity_name` means Davis has not yet pinpointed the origin, making targeted automation harder to configure.
-
-    "11":
-      title: "Recent Problems — Status, Root Cause & Blast Radius"
-      type: data
-      query: |
-        fetch dt.davis.problems
-        | filter not(dt.davis.is_duplicate)
-        | fields display_id, event.name, event.category, event.status,
-            event.start, root_cause_entity_name,
-            affected_count = arraySize(smartscape.affected_entity.ids)
-        | sort event.start desc
-        | limit 25
-      visualization: table
-      visualizationSettings:
-        autoSelectVisualization: false
-        table:
-          linewrapEnabled: true
-      davis: { enabled: false, davisVisualization: { isAvailable: true } }
-
-    "12":
-      title: "Active Problems by Affected Entity Type"
-      type: data
-      query: |
-        fetch dt.davis.problems
-        | filter not(dt.davis.is_duplicate) and event.status == "ACTIVE"
-        | filter isNotNull(smartscape.affected_entity.types)
-        | fieldsAdd entity_type = arrayToString(smartscape.affected_entity.types,
-            delimiter: ",")
-        | summarize total = count(),
-            avg_blast_radius = avg(arraySize(smartscape.affected_entity.ids)),
-            by: {entity_type}
-        | sort total desc
-        | limit 10
-      visualization: table
-      visualizationSettings:
-        autoSelectVisualization: false
-        table:
-          linewrapEnabled: false
-      davis: { enabled: false, davisVisualization: { isAvailable: true } }
-
-    # ════════════════════════════════════════════════════════════
-    # SECTION: ROOT CAUSE INTELLIGENCE
-    # ════════════════════════════════════════════════════════════
-    "13":
-      title: ""
-      type: markdown
-      content: |
-        ### 🔬 Root Cause Intelligence
-        **The critical automation quality signal.** Root causes with `active_now > 0` and `total_problems > 1` are the highest-risk entries: automation is repeatedly closing the symptom without fixing the underlying issue — accumulating operational debt with every auto-close cycle. MTTR by category reveals which problem types are hardest to resolve and where automation investment has the highest ROI.
-
-    "14":
-      title: "Known Root Causes — Recurrence & Active Status"
-      type: data
-      query: |
-        fetch dt.davis.problems
-        | filter not(dt.davis.is_duplicate)
-        | filter isNotNull(root_cause_entity_name)
-        | summarize total_problems = count(),
-            active_now = countIf(event.status == "ACTIVE"),
-            last_seen = max(event.start),
-            by: {root_cause_entity_name}
-        | sort total_problems desc
-        | limit 15
-      visualization: table
-      visualizationSettings:
-        autoSelectVisualization: false
-        table:
-          linewrapEnabled: false
-      davis: { enabled: false, davisVisualization: { isAvailable: true } }
-
-    "15":
-      title: "Avg Time to Resolve by Category (minutes)"
-      type: data
-      query: |
-        fetch dt.davis.problems
-        | filter not(dt.davis.is_duplicate) and isNotNull(resolved_problem_duration)
-        | fieldsAdd duration_min = resolved_problem_duration / 1min
+        fetch dt.system.events
+        | filter event.kind == "WORKFLOW_EVENT" and event.type == "WORKFLOW_EXECUTION"
+        | filter dt.automation_engine.workflow_execution.trigger.type == "Event"
+        | filter dt.automation_engine.state.is_final == true
+        | filter isNotNull(dt.automation_engine.workflow_execution.trigger.event.id)
+        | fields
+            workflow_title = dt.automation_engine.workflow.title,
+            trigger_event_id = dt.automation_engine.workflow_execution.trigger.event.id
+        | lookup [
+            fetch events
+            | filter event.kind == "DAVIS_PROBLEM"
+            | fields event.id, event.category, event.status, affected_entity_names
+          ],
+          sourceField: trigger_event_id,
+          lookupField: event.id
+        | filter isNotNull(lookup.event.id)
+        | expand entity = lookup.affected_entity_names
         | summarize
-            avg_mttr = avg(duration_min),
-            p95_mttr = percentile(duration_min, 95),
-            problem_count = count(),
-            by: {event.category}
-        | sort avg_mttr desc
+            times_triggered = count(),
+            still_active = countIf(lookup.event.status == "ACTIVE"),
+            problem_category = takeAny(lookup.event.category),
+            by: {entity, workflow_title}
+        | filter times_triggered > 1
+        | sort times_triggered desc
+        | limit 20
       visualization: table
       visualizationSettings:
         autoSelectVisualization: false
@@ -411,125 +267,43 @@ content:
       davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
     # ════════════════════════════════════════════════════════════
-    # SECTION: AUTOMATION & WORKFLOW ACTIVITY
+    # SECTION: WORKFLOW ACTIVITY
     # ════════════════════════════════════════════════════════════
-    "16":
+    "9":
       title: ""
       type: markdown
       content: |
-        ### 🤖 Automation & Workflow Activity
-        Volume and frequency of automated responses to anomaly signals. **Workflow execution spikes should correlate with anomaly volume spikes** — a flat automation line during a problem surge means workflows are not triggering, likely due to misconfigured alert rules or missing trigger conditions. The pattern execution table shows which use cases are actively being automated.
+        ### 🔧 Workflow Activity
+        Health and volume of every workflow that has been triggered by a Davis problem. **High error rates on a specific workflow** mean the automation is attempting but failing — the entity is still at risk and the failure mode needs investigation. The timeline shows when automation bursts occurred and whether they correlate with known problem waves.
 
-    "17":
-      title: "Workflow Executions — Pass / Fail by Type"
+    "10":
+      title: "Workflow Health — Success vs Error Rate"
       type: data
       query: |
-        fetch bizevents
-        | filter event.provider == "workflows"
-        | summarize executions = count(),
-            passed = countIf(test.result == "pass"),
-            failed = countIf(test.result == "fail"),
-            by: {event.type}
-        | sort executions desc
-      visualization: table
-      visualizationSettings:
-        autoSelectVisualization: false
-        table:
-          linewrapEnabled: false
-      davis: { enabled: false, davisVisualization: { isAvailable: true } }
-
-    "18":
-      title: "Anomaly Signal Volume Over Time — Kubernetes & Metric Events"
-      type: data
-      query: |
-        fetch events
-        | filter event.provider == "METRIC_EVENTS"
-            or event.provider == "KUBERNETES_ANOMALY_DETECTION"
-        | makeTimeseries count = count(), interval: 30m, by: {event.type}
-      visualization: lineChart
-      visualizationSettings:
-        autoSelectVisualization: false
-        chartSettings:
-          legend:
-            position: bottom
-            showLegend: true
-      davis: { enabled: false, davisVisualization: { isAvailable: true } }
-
-    # ════════════════════════════════════════════════════════════
-    # SECTION: AUTOMATION EFFECTIVENESS
-    # ════════════════════════════════════════════════════════════
-    "29":
-      title: ""
-      type: markdown
-      content: |
-        ### 📊 Automation Effectiveness
-        Quantifies how well the automation is performing end-to-end. **% Auto-Resolved** (problems closed in under 15 minutes) is a proxy for automated remediation — human-driven resolution rarely completes that quickly. **Pattern rows with a null `problem.display.id`** mean the automation check ran but found no matching active problem, which is the ideal healthy state. Fail rows with a non-null problem ID indicate a remediation attempt that did not succeed.
-
-    "30":
-      title: "Automation Patterns — Execution Log (Problem × Pattern × Outcome)"
-      type: data
-      query: |
-        fetch bizevents
-        | filter event.provider == "workflows"
-          and event.type == "demoability.test.problem-pattern"
-        | fields timestamp, pattern.name, pattern.application,
-            pattern.status, problem.display.id
-        | sort timestamp desc
-        | limit 25
-      visualization: table
-      visualizationSettings:
-        autoSelectVisualization: false
-        table:
-          linewrapEnabled: false
-      davis: { enabled: false, davisVisualization: { isAvailable: true } }
-
-    "31":
-      title: "Resolution Time Distribution by Category"
-      type: data
-      query: |
-        fetch dt.davis.problems
-        | filter not(dt.davis.is_duplicate) and event.status == "CLOSED"
-          and isNotNull(resolved_problem_duration)
-        | fieldsAdd duration_min = resolved_problem_duration / 1min
-        | fieldsAdd duration_bucket = if(duration_min < 5,
-            then: "⚡ < 5 min",
-            else: if(duration_min < 15,
-              then: "🟢 5–15 min",
-              else: if(duration_min < 60,
-                then: "🟡 15–60 min",
-                else: "🔴 > 60 min")))
-        | summarize count = count(), by: {event.category, duration_bucket}
-        | sort event.category asc
-      visualization: table
-      visualizationSettings:
-        autoSelectVisualization: false
-        table:
-          linewrapEnabled: false
-      davis: { enabled: false, davisVisualization: { isAvailable: true } }
-
-    # ════════════════════════════════════════════════════════════
-    # SECTION: RECURRING PROBLEM DETECTION
-    # ════════════════════════════════════════════════════════════
-    "19":
-      title: ""
-      type: markdown
-      content: |
-        ### ♻️ Recurring Problem Detection — The Automation Debt Meter
-        Each row here represents a problem that has been detected — and presumably resolved — more than once. **High `occurrences` with `active_now > 0` is the highest-priority signal**: automation is cycling on this issue right now. The key question is whether automation is buying time while a fix is developed, or has silently become a permanent workaround that masks a systemic failure nobody is fixing.
-
-    "20":
-      title: "Problems Recurring by Name — Potential Unresolved Root Causes"
-      type: data
-      query: |
-        fetch dt.davis.problems
-        | filter not(dt.davis.is_duplicate)
-        | summarize occurrences = count(),
-            active_now = countIf(event.status == "ACTIVE"),
-            first_seen = min(event.start),
-            last_seen = max(event.start),
-            by: {event.name}
-        | filter occurrences > 1
-        | sort occurrences desc
+        fetch dt.system.events
+        | filter event.kind == "WORKFLOW_EVENT" and event.type == "WORKFLOW_EXECUTION"
+        | filter dt.automation_engine.workflow_execution.trigger.type == "Event"
+        | filter dt.automation_engine.state.is_final == true
+        | filter isNotNull(dt.automation_engine.workflow_execution.trigger.event.id)
+        | fields
+            workflow_title = dt.automation_engine.workflow.title,
+            state = dt.automation_engine.state,
+            trigger_event_id = dt.automation_engine.workflow_execution.trigger.event.id
+        | lookup [
+            fetch events
+            | filter event.kind == "DAVIS_PROBLEM"
+            | fields event.id
+          ],
+          sourceField: trigger_event_id,
+          lookupField: event.id
+        | filter isNotNull(lookup.event.id)
+        | summarize
+            total = count(),
+            success = countIf(state == "SUCCESS"),
+            error = countIf(state == "ERROR"),
+            by: {workflow_title}
+        | fieldsAdd success_rate = success * 100 / total
+        | sort total desc
         | limit 20
       visualization: table
       visualizationSettings:
@@ -538,15 +312,30 @@ content:
           linewrapEnabled: true
       davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
-    "21":
-      title: "Problem Resolution Rate Over Time"
+    "11":
+      title: "Execution Timeline — Succeeded vs Failed"
       type: data
       query: |
-        fetch dt.davis.problems
-        | filter not(dt.davis.is_duplicate)
+        fetch dt.system.events
+        | filter event.kind == "WORKFLOW_EVENT" and event.type == "WORKFLOW_EXECUTION"
+        | filter dt.automation_engine.workflow_execution.trigger.type == "Event"
+        | filter dt.automation_engine.state.is_final == true
+        | filter isNotNull(dt.automation_engine.workflow_execution.trigger.event.id)
+        | fields
+            state = dt.automation_engine.state,
+            trigger_event_id = dt.automation_engine.workflow_execution.trigger.event.id,
+            timestamp
+        | lookup [
+            fetch events
+            | filter event.kind == "DAVIS_PROBLEM"
+            | fields event.id
+          ],
+          sourceField: trigger_event_id,
+          lookupField: event.id
+        | filter isNotNull(lookup.event.id)
         | makeTimeseries
-            active = countIf(event.status == "ACTIVE"),
-            resolved = countIf(event.status == "CLOSED"),
+            succeeded = countIf(state == "SUCCESS"),
+            failed = countIf(state == "ERROR"),
             interval: 30m
       visualization: areaChart
       visualizationSettings:
@@ -559,41 +348,86 @@ content:
       davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
     # ════════════════════════════════════════════════════════════
-    # SECTION: CI/CD & DEPLOYMENT CONTEXT
+    # SECTION: SERVICENOW INTEGRATION
     # ════════════════════════════════════════════════════════════
-    "22":
+    "12":
       title: ""
       type: markdown
       content: |
-        ### 🚀 CI/CD & Deployment Context
-        Correlation between deployment events and problem spikes. **Problems appearing within 30–60 minutes of a deployment are prime regression candidates** — check whether automation has rollback or canary-abort workflows configured for those services. The slowdown table is especially valuable here: degraded response times post-deploy often indicate resource leaks or unoptimized queries introduced in the change.
+        ### 🎫 ServiceNow Integration
+        Workflows with "servicenow" or "snow" in their title, filtered to those triggered by Davis problems. **Entities appearing repeatedly** here are generating new tickets without the underlying issue being resolved — each recurrence means the automated remediation path has been exhausted and the problem requires human ownership in ServiceNow.
 
-    "23":
-      title: "CI/CD Events — GitHub & Azure DevOps"
+    "13":
+      title: "ServiceNow Workflow Executions — Full Problem Log"
       type: data
       query: |
-        fetch events
-        | filter event.provider == "github.com" or event.provider == "azure.devops"
-        | summarize deployments = count(), by: {event.provider, event.type}
-        | sort deployments desc
-        | limit 15
+        fetch dt.system.events
+        | filter event.kind == "WORKFLOW_EVENT" and event.type == "WORKFLOW_EXECUTION"
+        | filter dt.automation_engine.workflow_execution.trigger.type == "Event"
+        | filter dt.automation_engine.state.is_final == true
+        | filter isNotNull(dt.automation_engine.workflow_execution.trigger.event.id)
+        | filter contains(lower(dt.automation_engine.workflow.title), "servicenow")
+            or contains(lower(dt.automation_engine.workflow.title), "snow")
+        | fields
+            workflow_title = dt.automation_engine.workflow.title,
+            state = dt.automation_engine.state,
+            trigger_event_id = dt.automation_engine.workflow_execution.trigger.event.id,
+            timestamp
+        | lookup [
+            fetch events
+            | filter event.kind == "DAVIS_PROBLEM"
+            | fields event.id, display_id, event.name, event.category, event.status, affected_entity_names
+          ],
+          sourceField: trigger_event_id,
+          lookupField: event.id
+        | filter isNotNull(lookup.display_id)
+        | fields
+            timestamp,
+            workflow_title,
+            state,
+            lookup.display_id,
+            lookup.event.name,
+            lookup.event.category,
+            lookup.event.status,
+            lookup.affected_entity_names
+        | sort timestamp desc
+        | limit 25
       visualization: table
       visualizationSettings:
         autoSelectVisualization: false
         table:
-          linewrapEnabled: false
+          linewrapEnabled: true
       davis: { enabled: false, davisVisualization: { isAvailable: true } }
 
-    "24":
-      title: "Slowdown & Performance Degradation Problems"
+    "14":
+      title: "Entities Generating ServiceNow Tickets"
       type: data
       query: |
-        fetch dt.davis.problems
-        | filter not(dt.davis.is_duplicate) and event.category == "SLOWDOWN"
-        | fields display_id, event.name, event.status, event.start,
-            root_cause_entity_name,
-            affected_count = arraySize(smartscape.affected_entity.ids)
-        | sort event.start desc
+        fetch dt.system.events
+        | filter event.kind == "WORKFLOW_EVENT" and event.type == "WORKFLOW_EXECUTION"
+        | filter dt.automation_engine.workflow_execution.trigger.type == "Event"
+        | filter dt.automation_engine.state.is_final == true
+        | filter isNotNull(dt.automation_engine.workflow_execution.trigger.event.id)
+        | filter contains(lower(dt.automation_engine.workflow.title), "servicenow")
+            or contains(lower(dt.automation_engine.workflow.title), "snow")
+        | fields
+            workflow_title = dt.automation_engine.workflow.title,
+            trigger_event_id = dt.automation_engine.workflow_execution.trigger.event.id
+        | lookup [
+            fetch events
+            | filter event.kind == "DAVIS_PROBLEM"
+            | fields event.id, event.status, affected_entity_names
+          ],
+          sourceField: trigger_event_id,
+          lookupField: event.id
+        | filter isNotNull(lookup.event.id)
+        | expand entity = lookup.affected_entity_names
+        | summarize
+            ticket_triggers = count(),
+            still_active = countIf(lookup.event.status == "ACTIVE"),
+            workflows = arrayToString(collectDistinct(workflow_title), delimiter: ", "),
+            by: {entity}
+        | sort ticket_triggers desc
         | limit 15
       visualization: table
       visualizationSettings:
