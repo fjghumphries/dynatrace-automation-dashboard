@@ -4,6 +4,22 @@ id: b4d9c685-2a32-4f58-bc9a-9074fde437a8
 content:
   annotations: []
   importedWithCode: false
+  variables:
+    - version: 2
+      key: WorkflowTitle
+      type: query
+      visible: true
+      editable: true
+      multiple: true
+      defaultValue: "*"
+      input: |
+        fetch dt.system.events
+        | filter event.kind == "WORKFLOW_EVENT" and event.type == "WORKFLOW_EXECUTION"
+        | filter dt.automation_engine.workflow_execution.trigger.type == "Event"
+        | filter dt.automation_engine.state.is_final == true
+        | summarize count(), by: {dt.automation_engine.workflow.title}
+        | fields dt.automation_engine.workflow.title
+        | sort dt.automation_engine.workflow.title asc
   settings:
     defaultTimeframe:
       enabled: true
@@ -57,6 +73,7 @@ content:
         | filter dt.automation_engine.workflow_execution.trigger.type == "Event"
         | filter dt.automation_engine.state.is_final == true
         | filter isNotNull(dt.automation_engine.workflow_execution.trigger.event.id)
+        | filter in(dt.automation_engine.workflow.title, array($WorkflowTitle))
         | fields trigger_event_id = dt.automation_engine.workflow_execution.trigger.event.id
         | lookup [
             fetch events
@@ -88,6 +105,7 @@ content:
         | filter dt.automation_engine.workflow_execution.trigger.type == "Event"
         | filter dt.automation_engine.state.is_final == true
         | filter isNotNull(dt.automation_engine.workflow_execution.trigger.event.id)
+        | filter in(dt.automation_engine.workflow.title, array($WorkflowTitle))
         | fields
             state = dt.automation_engine.state,
             trigger_event_id = dt.automation_engine.workflow_execution.trigger.event.id
@@ -124,6 +142,7 @@ content:
         | filter dt.automation_engine.workflow_execution.trigger.type == "Event"
         | filter dt.automation_engine.state.is_final == true
         | filter isNotNull(dt.automation_engine.workflow_execution.trigger.event.id)
+        | filter in(dt.automation_engine.workflow.title, array($WorkflowTitle))
         | fields trigger_event_id = dt.automation_engine.workflow_execution.trigger.event.id
         | lookup [
             fetch events
@@ -159,6 +178,7 @@ content:
         | filter dt.automation_engine.state.is_final == true
         | filter dt.automation_engine.state == "ERROR"
         | filter isNotNull(dt.automation_engine.workflow_execution.trigger.event.id)
+        | filter in(dt.automation_engine.workflow.title, array($WorkflowTitle))
         | fields trigger_event_id = dt.automation_engine.workflow_execution.trigger.event.id
         | lookup [
             fetch events
@@ -202,6 +222,7 @@ content:
         | filter dt.automation_engine.workflow_execution.trigger.type == "Event"
         | filter dt.automation_engine.state.is_final == true
         | filter isNotNull(dt.automation_engine.workflow_execution.trigger.event.id)
+        | filter in(dt.automation_engine.workflow.title, array($WorkflowTitle))
         | fields
             workflow_title = dt.automation_engine.workflow.title,
             state = dt.automation_engine.state,
@@ -239,6 +260,7 @@ content:
         | filter dt.automation_engine.workflow_execution.trigger.type == "Event"
         | filter dt.automation_engine.state.is_final == true
         | filter isNotNull(dt.automation_engine.workflow_execution.trigger.event.id)
+        | filter in(dt.automation_engine.workflow.title, array($WorkflowTitle))
         | fields
             workflow_title = dt.automation_engine.workflow.title,
             trigger_event_id = dt.automation_engine.workflow_execution.trigger.event.id
@@ -285,6 +307,7 @@ content:
         | filter dt.automation_engine.workflow_execution.trigger.type == "Event"
         | filter dt.automation_engine.state.is_final == true
         | filter isNotNull(dt.automation_engine.workflow_execution.trigger.event.id)
+        | filter in(dt.automation_engine.workflow.title, array($WorkflowTitle))
         | fields
             workflow_title = dt.automation_engine.workflow.title,
             state = dt.automation_engine.state,
@@ -321,6 +344,7 @@ content:
         | filter dt.automation_engine.workflow_execution.trigger.type == "Event"
         | filter dt.automation_engine.state.is_final == true
         | filter isNotNull(dt.automation_engine.workflow_execution.trigger.event.id)
+        | filter in(dt.automation_engine.workflow.title, array($WorkflowTitle))
         | fields
             state = dt.automation_engine.state,
             trigger_event_id = dt.automation_engine.workflow_execution.trigger.event.id,
